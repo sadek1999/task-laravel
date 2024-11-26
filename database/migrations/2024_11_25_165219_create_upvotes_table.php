@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('upvotes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); 
+            $table->foreignId('feature_id')->constrained('features')
+                ->cascadeOnDelete();
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
+            $table->boolean('upvote');
         });
     }
 
