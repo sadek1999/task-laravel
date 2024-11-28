@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FeatureResources;
 use App\Models\Feature;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,11 +15,10 @@ class FeatureController extends Controller
      */
     public function index()
     {
-        $data=Feature::latest()->paginate();
-       return Inertia::render('Feature/index',[
-        'features'=>FeatureResources::collection($data)
-       ]);
-
+        $data = Feature::latest()->paginate();
+        return Inertia::render('Feature/index', [
+            'features' => FeatureResources::collection($data)
+        ]);
     }
 
     /**
@@ -34,7 +34,13 @@ class FeatureController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->Validate([
+            'name' => ['sting', 'required'],
+            'description' => ['nullable', 'string'],
+        ]);
+      
+        Feature::create($data);
+        return to_route('feature.index')->with('success','successfully create feature');
     }
 
     /**
@@ -50,7 +56,9 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature)
     {
-        //
+        return Inertia::render("feature/Edit" ,[
+            'feature'=>new FeatureResources($feature)
+        ]) ;
     }
 
     /**
@@ -66,6 +74,7 @@ class FeatureController extends Controller
      */
     public function destroy(Feature $feature)
     {
-        //
+        $feature->delete();
+        return to_route('feature.index')->with('success','successfully deleted feature');
     }
 }
