@@ -1,27 +1,34 @@
-import { forwardRef, useEffect, useRef } from "react";
+import React from 'react';
+import AuthenticatedLayout from '../../../../vendor/laravel/breeze/stubs/inertia-react/resources/js/Layouts/AuthenticatedLayout';
+import { Head } from '@inertiajs/react';
+import { TFeature } from '@/types';
 
-const TextInput = forwardRef<
-  HTMLInputElement,
-  {
-    isFocused?: boolean;
-    className?: string;
-  } & React.InputHTMLAttributes<HTMLInputElement>
->(({ isFocused = false, className = "", ...props }, ref) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (isFocused) {
-      inputRef.current?.focus();
-    }
-  }, [isFocused]);
-
+const show = ({feature}:{feature:TFeature}) => {
   return (
-    <input
-      {...props}
-      ref={ref || inputRef}
-      className={`rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ${className}`}
-    />
-  );
-});
+    <AuthenticatedLayout
+      header={
+        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+          Edit Feature <b>"{feature.name}"</b>
+        </h2>
+      }
+    >
+      <Head title={`Edit Feature - ${feature.name}`} />
+      <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
+        <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
 
-export default TextInput;
+          <div className="flex-1">
+            <h2 className="text-2xl mb-2">{feature.name}</h2>
+            <p>{feature.description}</p>
+
+
+
+            
+          </div>
+        </div>
+      </div>
+
+    </AuthenticatedLayout>
+  );
+};
+
+export default show;
