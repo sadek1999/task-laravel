@@ -5,7 +5,7 @@ import { TFeature, TPaginatedData } from "@/types";
 import FeatureItem from "@/Components/FeatureItem";
 
 const index = ({ features }: { features: TPaginatedData<TFeature> }) => {
-  console.log(features);
+  // console.log(features);
   return (
     <AuthenticatedLayout
       header={

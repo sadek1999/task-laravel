@@ -28,6 +28,7 @@ export type TFeature={
   user:User,
   created_at:string,
   featureCount:number,
+  upvote_count:number,
   user_has_upvote:boolean,
   user_has_downvote:boolean,
   comment:TComment[]

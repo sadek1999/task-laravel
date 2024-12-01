@@ -6,6 +6,7 @@ import FeatureUpvoteDownvote from "./FeatureUpvoteDownvote";
 
 const FeatureItem = ({ feature }: { feature: TFeature }) => {
   const [isExpended, setIsExpended] = useState(false);
+  // console.log(feature)
   const toggleREadeMore = () => {
     setIsExpended(!isExpended);
   };

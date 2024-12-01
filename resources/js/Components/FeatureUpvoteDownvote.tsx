@@ -5,9 +5,9 @@ import React from "react";
 const FeatureUpvoteDownvote = ({ feature }: { feature: TFeature }) => {
   const upvoteForm = useForm({ upvote: true });
   const downvoteForm = useForm({ upvote: false });
-
+// console.log(feature.upvote_count)
   const upvoteDownvote = (upvote: boolean) => {
-    console.log(upvote)
+    // console.log(upvote)
     if (
       (feature.user_has_upvote && upvote) ||
       (feature.user_has_downvote && !upvote)
@@ -48,7 +48,7 @@ const FeatureUpvoteDownvote = ({ feature }: { feature: TFeature }) => {
           </svg>
         </button>
 
-        <p className="text-center font-bold text-xl">12</p>
+        <p className="text-center font-bold text-xl">{feature.upvote_count}</p>
         <button
           onClick={() => upvoteDownvote(false)}
           className={feature.user_has_downvote ? "text-amber-500" : ""}
