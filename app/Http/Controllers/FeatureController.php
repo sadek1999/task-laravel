@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FeatureResources;
 use App\Models\Feature;
-
+use App\Models\Upvote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -19,15 +19,29 @@ class FeatureController extends Controller
         $currentUserId = Auth::id();
         $data = Feature::latest()
             ->withCount('upvote')
-            ->withExist([
-                'user_has_upvoted' => function ($query) use ($currentUserId) {
-                    $query->where('user_id', $currentUserId)
-                        ->where('upvote', 1);
-                },
-                'user_has_downvoted' => function ($query) use ($currentUserId) {
-                    $query->where('user_id', $currentUserId)->where('upvote', 0);
-                }
-            ])
+            // ->withExists([
+            //     'upvotes as user_has_upvoted' => function ($query) use ($currentUserId) {
+            //         $query->where('user_id', $currentUserId)
+            //             ->where('upvote', 1);
+            //     },
+            //     'upvotes as user_has_downvoted' => function ($query) use ($currentUserId) {
+            //         $query->where('user_id', $currentUserId)
+            //             ->where('upvote', 0);
+            //     }
+            // ])
+            // ->with([
+            //     'upvotes' => function ($query) use ($currentUserId) {
+            //         $query->where('user_id', $currentUserId);
+            //     },
+            //     'upvotes as user_has_upvoted' => function ($query) use ($currentUserId) {
+            //         $query->where('user_id', $currentUserId)
+            //             ->where('upvote', 1);
+            //     },
+            //     'upvotes as user_has_downvoted' => function ($query) use ($currentUserId) {
+            //         $query->where('user_id', $currentUserId)
+            //             ->where('upvote', 0);
+            //     }
+            // ])
             ->paginate();
         return Inertia::render('Feature/index', [
             'features' => FeatureResources::collection($data)
@@ -53,7 +67,7 @@ class FeatureController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-       
+
         $data['user_id'] = $user;
         Feature::create($data);
         return to_route('feature.index')->with('success', 'successfully create feature');

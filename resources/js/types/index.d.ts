@@ -14,12 +14,23 @@ export type TPaginatedData<T>={
   link:Record<string,string>
 }
 
+export type TComment={
+  id:number,
+  comment:string,
+  created_at:string,
+  user:User
+}
+
 export type TFeature={
   id:number,
   name:string,
   description:string,
   user:User,
-  created_at:string
+  created_at:string,
+  featureCount:number,
+  user_has_upvote:boolean,
+  user_has_downvote:boolean,
+  comment:TComment[]
 }
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
