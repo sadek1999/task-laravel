@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FeatureResources;
 use App\Models\Feature;
-use App\Models\Upvote;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
