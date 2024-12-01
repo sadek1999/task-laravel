@@ -6,6 +6,7 @@ use App\Http\Resources\FeatureResources;
 use App\Models\Feature;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class FeatureController extends Controller
@@ -15,7 +16,19 @@ class FeatureController extends Controller
      */
     public function index()
     {
-        $data = Feature::latest()->paginate();
+        $currentUserId = Auth::id();
+        $data = Feature::latest()
+            ->withCount('upvote')
+            ->withExist([
+                'user_has_upvoted' => function ($query) use ($currentUserId) {
+                    $query->where('user_id', $currentUserId)
+                        ->where('upvote', 1);
+                },
+                'user_has_downvoted' => function ($query) use ($currentUserId) {
+                    $query->where('user_id', $currentUserId)->where('upvote', 0);
+                }
+            ])
+            ->paginate();
         return Inertia::render('Feature/index', [
             'features' => FeatureResources::collection($data)
         ]);
@@ -34,12 +47,13 @@ class FeatureController extends Controller
      */
     public function store(Request $request)
     {
+        $user=Auth::id();
         $data = $request->validate([
             'name' => ['string', 'required'],
             'description' => ['nullable', 'string'],
         ]);
 
-        $user = auth()->id();
+       
         $data['user_id'] = $user;
         Feature::create($data);
         return to_route('feature.index')->with('success', 'successfully create feature');
