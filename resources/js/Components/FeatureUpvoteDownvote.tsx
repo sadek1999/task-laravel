@@ -5,14 +5,18 @@ import React from "react";
 const FeatureUpvoteDownvote = ({ feature }: { feature: TFeature }) => {
   const upvoteForm = useForm({ upvote: true });
   const downvoteForm = useForm({ upvote: false });
-// console.log(feature.upvote_count)
+// console.log(feature)
   const upvoteDownvote = (upvote: boolean) => {
-    // console.log(upvote)
+    // console.log(upvote )
     if (
       (feature.user_has_upvote && upvote) ||
       (feature.user_has_downvote && !upvote)
     ) {
-    } else {
+      // console.log(feature.user)
+      upvoteForm.delete(route('upvote.destroy', feature.id), {
+        preserveScroll: true})
+    }
+    else {
       let form = null;
       if (upvote) {
         form = upvoteForm;
@@ -51,7 +55,7 @@ const FeatureUpvoteDownvote = ({ feature }: { feature: TFeature }) => {
         <p className="text-center font-bold text-xl">{feature.upvote_count}</p>
         <button
           onClick={() => upvoteDownvote(false)}
-          className={feature.user_has_downvote ? "text-amber-500" : ""}
+          className={feature.user_has_downvote ? "" : "text-amber-500"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
