@@ -17,31 +17,12 @@ class FeatureController extends Controller
      */
     public function index()
     {
-        // $currentUserId = Auth::id();
-        // $data = Feature::latest()
-        //     ->withCount('upvote')
-        //     ->withExists([
-        //         ' user_has_upvoted' => function ($query) use ($currentUserId) {
-        //             $query->where('user_id', $currentUserId)
-        //                 ->where('upvote', 1);
-        //         },
-        //         ' user_has_downvoted' => function ($query) use ($currentUserId) {
-        //             $query->where('user_id', $currentUserId)
-        //                 ->where('upvote', 0);
-        //         }
-        //     ])
 
-        //     ->paginate();
-
-
-        // return Inertia::render('Feature/index', [
-        //     'features' => FeatureResources::collection($data)
-        // ]);
 
         $currentUserId = Auth::id();
 
         $data = Feature::latest()
-            // ->withCount('upvote') // Use 'upvote' (singular) here
+            ->with('comment')
             ->withCount(['upvote as upvote_count' => function ($query) {
                 $query->select(DB::raw('SUM(CASE WHEN upvote = 1 THEN 1 ELSE -1 END)'));
             }])

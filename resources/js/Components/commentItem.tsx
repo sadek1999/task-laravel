@@ -4,7 +4,7 @@ import React from 'react';
 
 
 
-const commentItem = ({comment}:{comment:TComment}) => {
+const CommentItem = ({comment}:{comment:TComment}) => {
   const user=usePage().props.auth.user;
   const form=useForm();
   const deleteComment=()=>{
@@ -43,4 +43,4 @@ const commentItem = ({comment}:{comment:TComment}) => {
   );
 };
 
-export default commentItem;
+export default CommentItem;

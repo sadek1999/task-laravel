@@ -14,9 +14,11 @@ class CommentController extends Controller
         $data=$request->validate([
             'comment'=>['required',]
         ]);
-        $data['feater_id']=$feature->id;
+
+        $data['feature_id']=$feature->id;
         $data['user_id']=Auth::id();
         Comment::create($data);
+        // return $data;
 
     return to_route('feature.show',$feature) ;
     }

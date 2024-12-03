@@ -3,8 +3,13 @@ import AuthenticatedLayout from '../../../../vendor/laravel/breeze/stubs/inertia
 import { Head } from '@inertiajs/react';
 import { TFeature } from '@/types';
 import FeatureUpvoteDownvote from '@/Components/FeatureUpvoteDownvote';
+import NewCommentForm from '@/Components/NewCommentForm';
+import FeatureItem from './../../Components/FeatureItem';
+import CommentItem from '@/Components/commentItem';
+
 
 const show = ({feature}:{feature:TFeature}) => {
+  console.log(feature)
   return (
     <AuthenticatedLayout
       header={
@@ -23,9 +28,12 @@ const show = ({feature}:{feature:TFeature}) => {
             <p>{feature.description}</p>
 
 
-
-
+            <NewCommentForm  feature={feature}></NewCommentForm>
+      {feature.comment.map((comment)=>(
+        <CommentItem key={comment.id} comment={comment}/>
+      ))}
           </div>
+
         </div>
       </div>
 

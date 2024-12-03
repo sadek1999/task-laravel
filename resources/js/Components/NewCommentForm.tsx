@@ -5,13 +5,14 @@ import React, { FormEventHandler } from "react";
 import PrimaryButton from "./PrimaryButton";
 import TextAreaInput from "./TextAreaInput";
 
-const NewCommentForm = ({ feater }: { feater: TFeature }) => {
+const NewCommentForm = ({ feature }: { feature: TFeature }) => {
+//  console.log(feature)
   const user = usePage().props.user;
   const { data, setData, post, processing } = useForm({ comment: "" });
 
   const createComment: FormEventHandler = (e) => {
     e.preventDefault();
-    post(route("comment.store", feater.id), {
+    post(route("comment.store", feature.id), {
       preserveScroll: true,
       preserveState: true,
     });
