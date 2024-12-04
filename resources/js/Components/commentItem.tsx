@@ -29,7 +29,8 @@ const CommentItem = ({comment}:{comment:TComment}) => {
         </h3>
         <div className="italic mt-1">{comment.comment}</div>
       </div>
-      <div className="flex items-center py-2 px-6">
+      {
+        comment.user.id === user.id && <div className="flex items-center py-2 px-6">
         <button onClick={deleteComment}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                stroke="currentColor" className="size-4">
@@ -39,6 +40,8 @@ const CommentItem = ({comment}:{comment:TComment}) => {
 
         </button>
       </div>
+      }
+
     </div>
   );
 };

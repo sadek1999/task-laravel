@@ -29,9 +29,12 @@ const show = ({feature}:{feature:TFeature}) => {
 
 
             <NewCommentForm  feature={feature}></NewCommentForm>
-      {feature.comment.map((comment)=>(
+            <div className='flex'>
+            {feature.comment.map((comment)=>(
         <CommentItem key={comment.id} comment={comment}/>
       ))}
+            </div>
+
           </div>
 
         </div>
